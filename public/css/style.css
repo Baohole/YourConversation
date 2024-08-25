@@ -81,3 +81,183 @@
 }
 
 /* End Show Alert*/
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat Head */
+.box-head {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Chat Body */
+.chat {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.inner-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.inner-incoming,
+.inner-outgoing {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.inner-incoming {
+    align-items: flex-start;
+}
+
+.inner-outgoing {
+    align-items: flex-end;
+}
+
+.inner-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.inner-message {
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.inner-outgoing .inner-message {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.inner-img {
+    max-width: 400px;
+    margin-top: 50px;
+    border-radius: 5px;
+}
+
+/* Typing Indicator */
+.users-typing {
+    font-style: italic;
+    color: #888;
+    margin-top: 10px;
+}
+
+/* Chat Footer */
+.inner-foot {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-top: 1px solid #ddd;
+    border-radius: 0 0 10px 10px;
+}
+
+.inner-form {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.inner-form input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+.btn-icon {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.btn-imge {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.upload-box {
+    display: none;
+    /* Hide by default, show when needed */
+}
+
+.upload-box.show {
+    display: block;
+    /* Hide by default, show when needed */
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+button i {
+    margin-left: 5px;
+}
+
+/* Typing indicator */
+.users-typing {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.box-typing .inner-dots span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+    background-color: #3f3d3d;
+    border-radius: 50%;
+    animation: blink 1.4s infinite both;
+}
+
+@keyframes blink {
+
+    0%,
+    80%,
+    100% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+}
+
+/* End chat */
+.tooltip {
+    visibility: hidden;
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip.shown {
+    visibility: visible;
+    opacity: 1;
+}

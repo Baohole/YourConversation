@@ -1,3 +1,7 @@
+//[GET] /
 module.exports.index = (req, res) => {
-    res.send('ok');
+   
+    res.render('client/pages/home/index', {
+        pageTitle: 'YourConversation'
+    })
 }

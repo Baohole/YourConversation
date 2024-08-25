@@ -1,0 +1,68 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
+
+
+    block main
+        .container.my-3
+            .row 
+                .col-12 
+                    +box-head("Chat")
+            .row 
+                .col-12
+                    .chat
+                        .inner-body(
+                            my-id=user.id
+                        )
+                            each msg in chats
+                                if (msg.user_id != user.id)
+                                    .inner-incoming 
+                                        .inner-name= msg.user_name
+                                        if (msg.message.length > 0)
+                                            .inner-message= msg.message
+                                        each url in msg.images
+                                            img(
+                                                src =url 
+                                                class='inner-img'
+                                            )
+                                          
+                                else
+                                    .inner-outgoing 
+                                        if (msg.message.length > 0)
+                                            .inner-message= msg.message
+                                        each url in msg.images
+                                            img(
+                                                src =url 
+                                                class='inner-img'
+                                            )
+
+                            .users-typing
+                            .upload-box
+                                div( 
+                                    class="custom-file-container" 
+                                    data-upload-id="upload-multiple"
+                                )
+                        .inner-foot 
+                            form(
+                                class='inner-form'
+                            )
+                                input(
+                                    type='text'
+                                    placeholder='Aa...'
+                                    name='message'
+                                )
+                                span.btn-icon
+                                    i.fa-regular.fa-face-smile
+                                
+                                span.btn-imge 
+                                    i.fa-solid.fa-image
+                                button(type = 'submit')  
+                                    i.fa-solid.fa-paper-plane
+
+        div(
+            class="tooltip" 
+            role="tooltip"
+        )
+            emoji-picker.light
+
+        

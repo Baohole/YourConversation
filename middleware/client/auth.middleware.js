@@ -1,5 +1,5 @@
-module.exports = (req, res) => {
-    if(req.cookies.user_toke){
+module.exports = (req, res, next) => {
+    if(req.cookies.user_token){
         next();
     }
     else{

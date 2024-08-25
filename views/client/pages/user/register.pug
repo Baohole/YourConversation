@@ -1,0 +1,53 @@
+extends ../../layouts/auth.pug
+include ../../mixins/alert.pug
+
+
+block main
+
+    +alert-success(3000)
+    +alert-fail(5000)
+    .container
+        .row.justify-content-center
+            .col-md-6
+                .card.mt-5
+                    .card-body
+                        .tab-content
+                            #register.tab-pane.fade(role="tabpanel")
+                            h3.mt-5.mb-4.text-center Đăng ký
+                            form(
+                                action=`/user/register`
+                                id="register-form"
+                                method="POST"
+                                class="form-register"
+                            )
+                                .mb-3
+                                    label.form-label(for="register-fullname") Họ và tên
+                                    input.form-control#register-fullname(
+                                        type="text"
+                                        name="full_name"
+                                        required
+                                    )
+                                .mb-3
+                                    label.form-label(for="register-email") Email
+                                    input.form-control#register-email(
+                                        type="email"
+                                        name="email"
+                                        required
+                                    )
+                                .mb-3
+                                    label.form-label(for="register-password") Mật khẩu
+                                    .input-group
+                                    input.form-control#register-password(
+                                        type="password"
+                                        name="password"
+                                        required
+                                    )
+                                .mb-3
+                                    label.form-label(for="register-confirm-password") Xác nhận mật khẩu
+                                    input.form-control#register-confirm-password(
+                                        type="password"
+                                        name="confirm_password"
+                                        required
+                                    )
+                                .d-grid.gap-2
+                                    button.btn.btn-success(type="submit") Đăng ký
