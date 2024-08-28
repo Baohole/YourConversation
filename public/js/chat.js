@@ -131,6 +131,7 @@ if(user_info){
     btnImage.addEventListener('click', function(event) {
         event.stopPropagation();
         fileContainer.classList.toggle('show');
+        body.scrollTop = body.scrollHeight;
     });
 
     document.addEventListener('click', function(event) {
@@ -138,5 +139,4 @@ if(user_info){
             fileContainer.classList.remove('show');
         }
     });
-
 }

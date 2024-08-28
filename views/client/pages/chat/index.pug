@@ -65,4 +65,7 @@ include ../../mixins/alert.pug
         )
             emoji-picker.light
 
-        
+    block script
+        script(src="socket.io/socket.io.js")
+        script(src="../js/socket.js")
+        script(type="module", src="../js/chat.js")  

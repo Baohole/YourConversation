@@ -11,7 +11,12 @@ const userSchema = new mongoose.Schema({
     },
     phone:String,
     avatar:String,
-   
+    yourRequest: [],
+    requestFriend: [],
+    friends: [{
+        user_id: String,
+        room_id: String
+    }],
     createdAt: {
         type: Date,
         default: Date.now()

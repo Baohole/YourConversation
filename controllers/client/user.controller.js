@@ -2,6 +2,7 @@ const User = require('../../models/user.model');
 
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
+
 //[GET] /user
 module.exports.index = (req, res) => {
     res.send('ok');
