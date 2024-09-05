@@ -8,7 +8,7 @@ include ../../mixins/friends-section.pug
         h1 Trang bạn bè
        
         .container
-            a(href='/friends/request') Lời mời kết bạn (#{user.requestFriend.length})
+            a(href='/friends/request').requestFriend Lời mời kết bạn (#{user.requestFriend.length})
             a(href='/friends/list') Danh sách bạn bè
             a(href='/friends/request-sent') Đã gửi
         .container

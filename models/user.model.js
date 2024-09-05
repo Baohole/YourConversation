@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
     avatar:String,
     yourRequest: [],
     requestFriend: [],
+    active_stauts: String,
     friends: [{
         user_id: String,
         room_id: String

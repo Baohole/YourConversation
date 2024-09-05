@@ -38,9 +38,9 @@ if(info_card.length > 0){
         }
 
         const acceptRequest = info.querySelector('.add-friend-accept');
+        const refuseRequest = info.querySelector('.add-friend-refuse');
+        const accepted = info.querySelector('.accepted');
         if(acceptRequest){
-            const refuseRequest = info.querySelector('.add-friend-refuse');
-            const accepted = info.querySelector('.accepted');
             acceptRequest.addEventListener('click', () => {
                 accepted.style.display = 'block';
                 acceptRequest.style.display = 'none';
@@ -49,5 +49,27 @@ if(info_card.length > 0){
                 socket.emit('CLIENT_ACCEPT_REQUEST', _id);
             });
         }
+
+        if(refuseRequest){
+            refuseRequest.addEventListener('click', () => {
+                accepted.innerHTML = 'Đã từ chối'
+                accepted.style.display = 'block';
+                acceptRequest.style.display = 'none';
+                refuseRequest.style.display = 'none';
+
+                socket.emit('CLIENT_REFUSE_REQUEST', _id);
+            });
+        }
+
+        // const countRequest = document.querySelector('.requestFriend');
+        // if(countRequest){
+        //     console.log(_id);
+        //     socket.on('SERVER_RETURN_ADD', (user_id) => {
+        //         console.log(user_id);
+        //         if(_id == user_id){
+        //             console.log(user_id)
+        //         }
+        //     });
+        // }
     });
 }
