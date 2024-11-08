@@ -30,6 +30,8 @@ app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 app.use(express.static(`${__dirname}/public`));
+app.locals.moment = require('moment');
+
 
 const userRouter = require('./routers/client/index.router');
 userRouter(app);

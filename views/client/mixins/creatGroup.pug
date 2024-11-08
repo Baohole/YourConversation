@@ -1,0 +1,55 @@
+mixin creatGroup(friends)
+    .container
+        button#closeBtn.close-btn
+            span.icon.icon-x
+            span.sr-only Close
+        h2 Nhóm mới
+        form.form-creat-group(
+            action='/chat/create/group'
+            method="POST"
+        )
+            .form-group
+                label(for="groupName") Tên nhóm
+                input#groupName(
+                    type="text" 
+                    placeholder="Nhập tên nhóm"
+                    name='groupName'
+                )
+
+            .form-group
+                label Ảnh
+                .image-upload-area
+                    #imagePreview.image-preview.hidden
+                        img#groupAvatar.preview-image(src="", alt="Group avatar")
+                        button#removeImage.remove-image-btn
+                            span.icon.icon-x
+                    
+                    #uploadArea.upload-placeholder
+                        label(for="imageUpload")
+                            span.icon.icon-upload
+                            span.sr-only Upload image
+                        input#imageUpload.hidden(type="file", accept="image/*")
+            
+            hr
+            .form-group
+                label Thành viên
+                .user-search
+                    input#userSearch(type="text" placeholder="Tìm kiếm")
+                
+                ul#userList.user-list
+                    each friend in friends
+                        .user-item
+                            .user-avatar
+                                img(src=friend.avatar)
+                            .user-full_name=friend.full_name
+                            input.form-check-input(type='checkbox' value=friend._id)
+            
+            input.hidden(
+                name='ids'
+                type='text'
+                value=''
+            )
+
+        button#createGroupBtn.create-group-btn
+            span.icon.icon-users
+            span Tạo nhóm

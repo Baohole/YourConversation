@@ -6,48 +6,83 @@ block main
 
     +alert-success(3000)
     +alert-fail(5000)
-    .container
-        .row.justify-content-center
-            .col-md-6
-                .card.mt-5
-                    .card-body
-                        .tab-content
-                            #register.tab-pane.fade(role="tabpanel")
-                            h3.mt-5.mb-4.text-center Đăng ký
-                            form(
-                                action=`/user/register`
-                                id="register-form"
-                                method="POST"
-                                class="form-register"
-                            )
-                                .mb-3
-                                    label.form-label(for="register-fullname") Họ và tên
-                                    input.form-control#register-fullname(
-                                        type="text"
-                                        name="full_name"
-                                        required
-                                    )
-                                .mb-3
-                                    label.form-label(for="register-email") Email
-                                    input.form-control#register-email(
-                                        type="email"
-                                        name="email"
-                                        required
-                                    )
-                                .mb-3
-                                    label.form-label(for="register-password") Mật khẩu
-                                    .input-group
-                                    input.form-control#register-password(
-                                        type="password"
-                                        name="password"
-                                        required
-                                    )
-                                .mb-3
-                                    label.form-label(for="register-confirm-password") Xác nhận mật khẩu
-                                    input.form-control#register-confirm-password(
-                                        type="password"
-                                        name="confirm_password"
-                                        required
-                                    )
-                                .d-grid.gap-2
-                                    button.btn.btn-success(type="submit") Đăng ký
+
+    .bg-white.w-full.max-w-md.p-8.rounded-lg.shadow-md
+        // Sign up heading
+        h2.text-3xl.font-bold.text-center.mb-8 Sign up
+        // Form
+        form.space-y-6(
+            action='/user/register'
+             method='POST'
+             )
+            // Email field
+            div
+                label.block.text-sm.font-medium.text-gray-700(for='email') Email
+                input#email.mt-1.block.w-full.px-4.py-2.border.border-gray-300.rounded-lg.placeholder-gray-400(type='email' name='email' placeholder='example@gmail.com' required='' class='focus:outline-none focus:ring-2 focus:ring-black')
+            // Password field
+            div
+                label.block.text-sm.font-medium.text-gray-700(for='full_name') Fulll name
+                .relative
+                    input#full_name.mt-1.block.w-full.px-4.py-2.border.border-gray-300.rounded-lg.placeholder-gray-400(type='text' name='full_name' placeholder='your full name' required='' class='focus:outline-none focus:ring-2 focus:ring-black')
+            div
+                label.block.text-sm.font-medium.text-gray-700(for='password') Create a password
+                .relative
+                    input#password.mt-1.block.w-full.px-4.py-2.border.border-gray-300.rounded-lg.placeholder-gray-400(type='password' name='password' placeholder='must be 8 characters' required='' class='focus:outline-none focus:ring-2 focus:ring-black')
+            // Confirm Password field
+            div
+                label.block.text-sm.font-medium.text-gray-700(for='confirm-password') Confirm password
+                .relative
+                    input#confirm-password.mt-1.block.w-full.px-4.py-2.border.border-gray-300.rounded-lg.placeholder-gray-400(type='password' name='confirm_password' placeholder='confrim password' required='' class='focus:outline-none focus:ring-2 focus:ring-black')
+            // Submit Button
+            button.w-full.py-3.bg-cyan-700.text-white.rounded-lg.text-center.font-medium(type='submit' class='hover:bg-cyan-800') Log in
+        // Social login buttons
+        // Already have an account
+        p.text-center.text-sm.text-gray-500.mt-6
+            | Already have an account? 
+            a.text-black.font-medium(href='/user/login') Log in
+
+    //- .container
+    //-     .row.justify-content-center
+    //-         .col-md-6
+    //-             .card.mt-5
+    //-                 .card-body
+    //-                     .tab-content
+    //-                         #register.tab-pane.fade(role="tabpanel")
+    //-                         h3.mt-5.mb-4.text-center Đăng ký
+    //-                         form(
+    //-                             action=`/user/register`
+    //-                             id="register-form"
+    //-                             method="POST"
+    //-                             class="form-register"
+    //-                         )
+    //-                             .mb-3
+    //-                                 label.form-label(for="register-full_name") Họ và tên
+    //-                                 input.form-control#register-full_name(
+    //-                                     type="text"
+    //-                                     name="full_name"
+    //-                                     required
+    //-                                 )
+    //-                             .mb-3
+    //-                                 label.form-label(for="register-email") Email
+    //-                                 input.form-control#register-email(
+    //-                                     type="email"
+    //-                                     name="email"
+    //-                                     required
+    //-                                 )
+    //-                             .mb-3
+    //-                                 label.form-label(for="register-password") Mật khẩu
+    //-                                 .input-group
+    //-                                 input.form-control#register-password(
+    //-                                     type="password"
+    //-                                     name="password"
+    //-                                     required
+    //-                                 )
+    //-                             .mb-3
+    //-                                 label.form-label(for="register-confirm-password") Xác nhận mật khẩu
+    //-                                 input.form-control#register-confirm-password(
+    //-                                     type="password"
+    //-                                     name="confirm_password"
+    //-                                     required
+    //-                                 )
+    //-                             .d-grid.gap-2
+    //-                                 button.btn.btn-success(type="submit") Đăng ký

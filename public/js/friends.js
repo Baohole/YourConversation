@@ -2,8 +2,8 @@ const addFriendButtons = document.querySelectorAll('.add-friend');
 if(addFriendButtons) {
     addFriendButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const profileCard = button.closest('.profile-card');
-            const requestSendButton = profileCard.querySelector('.request-send');
+            const userCard = button.closest('.user-card');
+            const requestSendButton = userCard.querySelector('.request-send');
             
             button.style.display = 'none';
             requestSendButton.style.display = 'block';

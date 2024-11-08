@@ -1,0 +1,42 @@
+mixin friend-list(friends)
+    aside.sidebar.chatsider(role='complementary' aria-label='Chat sidebar')
+        header.chatsider-header
+            .search-container
+                i.fa-solid.fa-magnifying-glass
+                input.find-input(type='text' placeholder='Find friends...' aria-label='Search friends')
+            .header-actions
+                button.action-btn(title='Add Friend' onclick='addFriend()')
+                    i.fas.fa-user-plus
+                button.action-btn(title='Create Group' onclick='createGroup()')
+                    i.fas.fa-users
+        ul.user-list(role='list')
+            each room in rooms
+                a(
+                    href=`/chat/${room.id}`
+                )
+                    li
+                        .user(tabindex='0' role='button')
+                            img.user-avatar(src=room.avatar alt=room.name loading='lazy')
+                            .user-info
+                                span.user-name=room.name
+                                .user-status.online
+                                    span Online
+    //- aside.user-list
+    //-     .text-field
+    //-         input#outlined-search(type='search')
+    //-         hr.divider
+    //-     ul.list
+    //-         each room in rooms
+    //-             a(
+    //-                 href=`/chat/${room.id}`
+    //-             )
+    //-                 li.user-info
+    //-                     .user-avatar
+    //-                         img.avatar(src=room.avatar alt=room.name)
+    //-                     .user-name
+    //-                         h3=room.name
+    //-                         p
+    //-                             span.nearest-message Ali Connors
+    //-                             |  &mdash; I&apos;ll be in your neighborhood doing errands
+    //-                             |                             this&mldr;
+    //-             hr.divider

@@ -1,31 +1,25 @@
 extends ../../layouts/default.pug
-include ../../mixins/box-head.pug
-include ../../mixins/alert.pug
 include ../../mixins/friends-section.pug
 
     block main
-        h1 Lời mời kết bạn
-        .container
-            a(href='/friends/request').requestFriend Lời mời kết bạn (#{user.requestFriend.length})
-            a(href='/friends/list') Danh sách bạn bè
-            a(href='/friends/request-sent') Đã gửi
-        .container
-            if (users.length > 0)
-                each profile in users
-                    .profile-card
-                        img(
-                            src=profile.avatar 
-                            alt=profile.full_name
-                        )
-                        .info(id=profile.id)
-                            h3= profile.full_name 
-                            button.request-sent(
-                                disable
-                            ) Đã gửi lời mời 
-                            button.delete-request Thu hồi
-                            button.request-deleted Đã thu hồi
-            else 
-                p Trống
+        .container-fluid
+            +friends-section
+            .users-box
+                .friend-section-title Lời mời kết bạn
+                .users
+                    each user in users
+                        .user-card
+                            img(
+                                src=user.avatar 
+                                alt=user.full_name
+                            )
+                            .info(id=user.id)
+                                h3= user.full_name 
+                                button.request-sent(
+                                    disable
+                                ) Đã gửi lời mời 
+                                button.delete-request Thu hồi
+                                button.request-deleted Đã thu hồi
     block script 
         script(src="../socket.io/socket.io.js")
         script(src="../../js/socket.js")

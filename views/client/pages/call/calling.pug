@@ -1,0 +1,16 @@
+extends ../../layouts/call.pug
+include ../../mixins/alert.pug
+
+
+    block main
+        .container(call-detail=call_detail)
+            h1 Đang gọi
+            .call-animation
+            .avtar
+                img(src='#' alt='')
+            .name Baox12
+            .button-bar
+                i.rounded-circle.fa-solid.fa-xmark(onclick="endCall()")
+            audio#ringtone(loop='')
+                source(src='/audio/ringtone.mp3' type='audio/mpeg')
+                | Your browser does not support the audio element.

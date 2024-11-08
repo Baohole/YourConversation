@@ -3,11 +3,6 @@ const User = require('../../models/user.model');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
 
-//[GET] /user
-module.exports.index = (req, res) => {
-    res.send('ok');
-}
-
 //[GET] /user/login
 module.exports.login = (req, res) => {
    
@@ -32,8 +27,7 @@ module.exports.loginPost = async (req, res) => {
             else {
                 res.cookie('user_token', user.user_token);
             }
-
-            res.redirect('/dashboard');
+            res.redirect('/chat');
         }
         else {
             req.flash('error', "Sai tài khoản hoặc mật khẩu");
@@ -61,12 +55,13 @@ module.exports.register = (req, res) => {
 module.exports.registerPost = async (req, res) => {
     req.body.password = (md5(req.body.password));
     req.body.user_token = jwt.sign(req.body.email, process.env.JWT_SECRECT);
+    req.body.avatar = `https://ui-avatars.com/api/?name=${req.body.full_name}&background=random`
     try {
         const user = new User(req.body);
         await user.save();
         res.cookie('user_token', user.user_token);
 
-        res.redirect('/dashboard');
+        res.redirect('/chat');
     } catch (error) {
         req.flash('error', "Tạo tài khoản thất bại!!");
         res.redirect('back');

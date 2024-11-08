@@ -6,44 +6,41 @@ block main
 
   +alert-success(3000)
   +alert-fail(5000)
-  .container
-    .row.justify-content-center
-      .col-md-6
-        .card.mt-5
-          .card-body
-            .tab-content
-              #login.tab-pane.fade.show.active(role="tabpanel")
-                h3.mt-5.mb-4.text-center Đăng nhập
-                form(
-                  action=`/user/login`
-                  id="login-form"
-                  method="POST"
-                  class="form-login"
-                )
-                  .mb-3
-                    label.form-label(for="email") Email
-                    input.form-control#email(
-                      type="email"
-                      name="email"
-                      required
-                      autofocus
-                    )
-                  .mb-3
-                    label.form-label(for="password") Mật khẩu
-                    .input-group
-                      input.form-control#password(
-                        type="password"
-                        name="password"
-                        required
-                      )
-                  .mb-3
-                    .form-check
-                      input.form-check-input#remember-me(type="checkbox" name="remember")
-                      label.form-check-label(for="remember-me") Ghi nhớ đăng nhập
-                    .text-end
-                      a(href="/user/password/forgot") Quên mật khẩu?
-                  .d-grid.gap-2
-                    button.btn.btn-primary(type="submit") Đăng nhập
-                  .mt-3.text-beign Chưa có tài khoản ?  
-                    a(href='/user/register') Đăng ký
+    // Title
+  .bg-white.w-full.max-w-sm.rounded-lg.shadow-lg.p-6.relative
+    h2.text-center.text-2xl.font-semibold.mb-2 Log in
+    p.text-center.text-sm.text-gray-500
+      | Don&apos;t have an account? 
+      a.text-blue-600(href='/user/register') Sign up
+    // Divider
+    .flex.items-center.my-6
+      hr.flex-grow.border-gray-300
+    form(
+      action='/user/login'
+      id='login-form'
+      method='POST'
+      class='form-login space-y-4'
+    )
+      div
+        label.sr-only(for='email') Your email
+        input#email(
+          type='email'
+          name='email'
+          placeholder='Your email'
+          class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+        )
+      .relative
+        label.sr-only(for='password') Your password
+        input#password(
+          type='password'
+          name='password'
+          placeholder='Your password'
+          class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+        )
+      // Submit button
+      button.w-full.bg-cyan-700.text-white.py-2.rounded-lg.mt-6(type='submit') Log in
+    
+    .text-right.mt-2
+      a.text-sm.text-blue-600(href='#') Forgot your password?
+
                   

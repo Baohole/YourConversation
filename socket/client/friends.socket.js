@@ -81,8 +81,13 @@ module.exports = async (res) => {
                     _id: _id,
                     yourRequest: my_id
                 });
-                if (existYourRequest && existRequest) {
+                const existFriend = await User.findOne({
+                    _id: my_id,
+                    'friends.user_id': _id
+                })
+                if (existYourRequest && existRequest && !existFriend) {
                     const room_chat = new RoomChat({
+                        type: 'friend',
                         users: [
                             {
                                 user_id: _id,

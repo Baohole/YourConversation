@@ -1,5 +1,19 @@
 mixin friends-section
-    .container
-        a(href='/friends/request') Lời mời kết bạn (0)
-        a(href='/friends/list') Danh sách bạn bè
-        a(href='/friends/request-sent') Đã gửi
+    .button-stack
+        button.btn.contained
+            a(href='/friends/list') 
+                i(class="fa-solid fa-user")
+                span Danh sách bạn bè
+        button.btn.contained
+            a(href='/friends/request') 
+                i(class="fa-solid fa-user-plus")
+                span Yêu cầu kết bạn 
+        button.btn.contained
+            a(href='/friends/request-sent') 
+                i(class="fa-solid fa-file-export")
+                span Lời mời đã gửi
+        button.btn.contained
+            a(href='/groups') 
+                i(class="fa-solid fa-user-group")
+                span Danh sách nhóm
+        hr

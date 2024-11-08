@@ -16,8 +16,9 @@ const userSchema = new mongoose.Schema({
     active_stauts: String,
     friends: [{
         user_id: String,
-        room_id: String
+        room_id: String,
     }],
+    group: [],
     createdAt: {
         type: Date,
         default: Date.now()

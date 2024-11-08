@@ -1,30 +1,27 @@
 extends ../../layouts/default.pug
-include ../../mixins/box-head.pug
-include ../../mixins/alert.pug
 include ../../mixins/friends-section.pug
+include ../../mixins/alert.pug
 
     block main
-        h1 Lời mời kết bạn
-        
-        .container
-            a(href='/friends/request').requestFriend Lời mời kết bạn (#{user.requestFriend.length})
-            a(href='/friends/list') Danh sách bạn bè
-            a(href='/friends/request-sent') Đã gửi
-        .container
-            if (infos.length > 0)
-                each profile in infos
-                    .profile-card
-                        img(
-                            src=profile.avatar 
-                            alt=profile.full_name
-                        )
-                        .info(id=profile.id)
-                            h3= profile.full_name 
-                            button.add-friend-accept Chấp nhận 
-                            button.add-friend-refuse Từ chối
-                            button.accepted Đã chấp nhập
-            else 
-                p Chưa có lời mời kết bạn
+        .container-fluid
+            +friends-section
+            .users-box
+                    .friend-section-title Lời mời kết bạn
+                    .users
+                        if (infos.length > 0)
+                            each profile in infos
+                                .user-card
+                                    img(
+                                        src=profile.avatar 
+                                        alt=profile.full_name
+                                    )
+                                    .info(id=profile.id)
+                                        h3= profile.full_name 
+                                        button.add-friend-accept Chấp nhận 
+                                        button.add-friend-refuse Từ chối
+                                        button.accepted Đã chấp nhập
+                        else 
+                            p Chưa có lời mời kết bạn
 
     block script 
         script(src="../socket.io/socket.io.js")

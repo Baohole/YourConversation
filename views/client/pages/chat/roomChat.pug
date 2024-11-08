@@ -1,0 +1,153 @@
+extends ../../layouts/default.pug
+include ../../mixins/formatTime.pug
+include ../../mixins/alert.pug
+
+    block main
+        .chat-area(my-id=user.id)
+            // Chat Header
+            .chat-header
+                .user-info
+                    img.profile-pic(src=room_detail.avatar alt=room_detail.name)
+                    .user-details
+                        h3=room_detail.name
+                        span.online-status Online
+
+            #chatMessages.chat-messages
+                each chats, date in messages
+                    .date-header
+                        span=date
+                    each msg in chats
+                        if (msg.user_id != user.id)
+                            .message.received
+                                .avatar
+                                    img(src=msg.user_avatar, alt=msg.user_name)
+                                .message-content
+                                    .inner-content
+                                        .username
+                                            span.name=msg.user_name
+                                            span.role owner
+                                        .content
+                                            each file in msg.files
+                                                img(src=file.link alt='Image' class='inner-img rounded-lg cursor-pointer object-cover max-h-[200px]') 
+                                        
+                                            if (msg.message.length > 0)
+                                                p= msg.message
+                                            +hourandminute(msg.created_at)
+                        else
+                            .message.sent
+                                .message-content
+                                    .inner-content
+                                        .content
+                                            each file in msg.files
+                                                img(src=url.link alt='Image' class='inner-img rounded-lg cursor-pointer object-cover max-h-[200px]') 
+
+                                            if (msg.message.length > 0)
+                                                p= msg.message
+                                            +hourandminute(msg.created_at)  
+                // Typing Indicator
+                #typingIndicator.typing-indicators.hidden
+            // Message Input
+            div(
+                class="tooltip" 
+                role="tooltip"
+            )
+                emoji-picker.light
+
+            .chat-container
+                .chat-input
+                    button.emoji-btn
+                        i.fa-regular.fa-face-smile
+                    form(
+                        class='message-input'
+                    ) 
+                        input#messageInput(placeholder='Aa...' autocomplete='off')
+                        label(for="fileInput")
+                            i.fas.fa-paperclip
+                        input#fileInput.hidden(type='file' multiple='true')
+                        // Preview container for selected images
+                    
+
+                button.send-btn
+                    i.fas.fa-paper-plane
+            
+        aside.chat-property(role='complementary' aria-label='Thông tin đoạn chat')
+            .header
+                button.close-btn(onclick='closeChatProperty()') &times;
+                span.title Group info
+                span.edit
+                    i.fa-solid.fa-pencil
+            .room-content
+                .group-info
+                    img(src=room_detail.avatar alt='Group Icon')
+                    span.room-name=room_detail.name
+                    if (room_detail.type=='friend')
+                        p Friend
+                    else
+                        p 63 members
+                .notification-section
+                    .notification-title
+                        i.fa-regular.fa-bell
+                        p Notifications
+                    label.toggle-switch
+                        input(type='checkbox' checked='')
+                        span.slider
+            .chat-detail
+                .chat-sections
+                    ul
+                        if (room_detail.type!=='friend')
+                            li
+                                .section.active Members
+                        li
+                            .section Media
+                        li
+                            .section Files
+                .members-section
+                    ul.member-list
+                        li.member-item
+                            .member-avatar(style='background-color: #ff6b6b;') VB
+                            .member-info
+                                p Vi&#x1EBF;t B&#x1EA3;o
+                                span.status.online online
+                        li.member-item
+                            .member-avatar(style='background-color: #8e44ad;') AQ
+                            .member-info
+                                p Anh Tr&#x1EA7;n D&#x1B0;&#x1A1;ng Qu&#x1ED1;c
+                                span last seen 1 hour ago
+                        li.member-item
+                            .member-avatar(style='background-color: #3498db;') DN
+                            .member-info
+                                p Danh Nguyen
+                                span last seen 1 hour ago
+                        li.member-item
+                            .member-avatar(style='background-color: #e74c3c;') NC
+                            .member-info
+                                p Nguy&#x1EC5;n Ng&#x1ECD;c Chi&#x1EBF;n C&ocirc;ng
+                                span last seen 3 hours ago
+                        li.member-item
+                            .member-avatar(style='background-color: #f39c12;') NA
+                            .member-info
+                                p Nguy&#x1EC5;n Vi&#x1EC7;t Anh
+                                span last seen 5 hours ago
+        
+        .preview-container.hidden.fixed.inset-0.bg-gray-800.bg-opacity-50.flex.items-center.justify-center.z-50
+            // Modal Container
+            .bg-white.rounded-lg.shadow-lg(class='w-[400px]')
+                // Modal Header
+                .flex.items-center.justify-between.px-3.py-2
+                    h2.text-lg.font-semibold Send Files
+                    button.text-gray-600.close-upload-container(class='hover:text-gray-800 text-[32px]') &times;
+                // Image Preview
+                .files-preview.rounded-lg.mx-2.mt-0.overflow-y-scroll.items-center.justify-center(class='h-[230px]')
+                     img.preview(src="#")
+                // Caption Input and Send Button
+                .flex.items-center.px-2.py-3.border-none.space-x-2
+                    input.flex-grow.border-none.px-4.py-2.text-sm(type='text' placeholder='Add a caption...' class='focus:outline-none focus:border-blue-500')
+                    button.send-files-btn.bg-blue-500.text-white.rounded-full.px-3.py-2.font-semibold(class='hover:bg-blue-600') SEND
+
+
+        
+
+    block script
+        script(src="../socket.io/socket.io.js")
+        script(src="../../js/socket.js")
+        script(type="module", src="../js/chat.js")  

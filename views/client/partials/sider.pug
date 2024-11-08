@@ -1,12 +1,24 @@
-.sider  
-    .inner-menu     
-        ul 
-            li 
-                a(href=`/dashboard`) Tổng quan
-        
-        ul 
-            li 
-                a(href=`/chat`) Chat
-        ul 
-            li 
-                a(href=`/friends`) Bạn bè
+aside.sider.closed
+    button#menu-button(aria-label='open sider') &#x2630;
+    hr
+    ul.sider-list
+        li.sider-item
+            button.sider-button
+                a(href=`/chat`)
+                    span.sider-icon 
+                        i(class="fa-solid fa-house")
+                    span.sider-text Trang chủ
+        li.sider-item
+            button.sider-button
+                a(href=`/friends`)
+                    span.sider-icon
+                        i(class="fa-solid fa-user-group")
+                    span.sider-text Nhóm chat
+        li.sider-item
+            button.sider-button
+                a(href=`/user/logout`).logout
+                    span.sider-icon
+                        i(class="fa-solid fa-arrow-right-from-bracket")
+
+                    span.sider-text Đăng xuất     
+    div.bagde.bg-success #{user.full_name}

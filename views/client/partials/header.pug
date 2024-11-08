@@ -1,9 +1,13 @@
-header.header
-    .container-fluid
-        .row.align-items-center
-            .col-3
-                .inner-logo
-                    a(href=`/dashboard`) YC
-            .col-9.text-end
-                a.btn.btn-info(href=`/user/logout`) Đăng xuất
-                span.badge.bg-success #{user.full_name}
+.home-header
+    .nav.justify-self-center.flex.items-center.justify-between.w-full.max-w-12xl.p-4.bg-white.rounded-lg.shadow-md
+        .flex.items-center.space-x-2
+            .w-12.h-12.bg-cyan-600.flex.justify-center.items-center.text-white.font-bold.rounded Chats
+            span.font-semibold.text-gray-800 ChatWeb
+        .flex.items-center.space-x-4
+            button.text-gray-600
+                svg.w-5.h-5(fill='none' stroke='currentColor' viewbox='0 0 24 24' xmlns='http://www.w3.org/2000/svg')
+                    path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M11 19a8 8 0 100-16 8 8 0 000 16z')
+                    path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-4.35-4.35')
+            a.px-4.py-2.bg-gradient-to-r.bg-cyan-700.text-white.rounded-lg(href='/user/login' class='hover:bg-cyan-900') Sign In
+
+
