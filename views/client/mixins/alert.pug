@@ -5,16 +5,20 @@ mixin alert-success
                 class='alert alert-success'
                 show-alert
                 data-time=3000
-            ) #{messages.success}
-                span(close-alert) x
+            ) 
+                i(class="fa-solid fa-check")
+                span #{messages.success}
+                div.timebar
 
 
 mixin alert-fail
     - if (messages.error)
         .messages.info
             div(
-                class='alert alert-danger'
+                class='alert alert-error'
                 show-alert
                 data-time=5000
-            ) #{messages.error}     
-                span(close-alert) x
+            ) 
+                i(class="fa-solid fa-circle-exclamation")
+                span #{messages.error}     
+                div.timebar

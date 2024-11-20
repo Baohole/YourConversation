@@ -5,6 +5,11 @@ const userSchema = new mongoose.Schema({
     email: String, 
     password: String,
     user_token: String,
+    username: {
+        type: String,
+        unique: true,
+        required: true
+    },
     status: {
         type: String,
         default: "active"

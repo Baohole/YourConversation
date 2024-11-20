@@ -1,39 +1,38 @@
-mixin settingsider(user)
+mixin profilesider(user)
     aside.sidebar.profilesider.hidden(role='complementary' aria-label='Chat sidebar')
             .container
                 .header
                     span.back-arrow
                         i.fa-solid.fa-arrow-left
                     h2 Edit profile
-                .profile-picture
-                    label(for='avatar')
-                        .picture-icon
-                            i.fa-solid.fa-camera
-                        img.preview-avatar.hidden(src='./Wallpaper Telegram.jpg' alt='Baor')
-                    input#avatar.hidden(type='file' accept='image/*')
-                form.profile-form
+
+                form.profile-form(
+                )
+                    .profile-picture
+                        label(for='avatar')
+                            .picture-icon
+                                i.fa-solid.fa-camera
+                            img.preview-avatar.hidden(src=user.avatar alt='Baor')
+                        input#avatar.hidden(type='file' accept='image/*')
                     .form-group
-                        label(for='first-name') First name
-                        input#first-name(type='text' value='Viết')
+                        label(for='full_name') Full name
+                        input#full_name(type='text' value=user.full_name)
                     .form-group
-                        label(for='last-name') Last name
-                        input#last-name(type='text' value='Bảo')
-                    .form-group
-                        label(for='bio') Bio
-                        textarea#bio(rows='3')
-                        span.char-limit 70
+                        label(for='phone') Phone 
+                        input#phone(type='text' value=user.phone)
                     .form-group
                         label(for='username') Username
-                        input#username(type='text' value='vietbao2810')
+                        input#username(type='text' value=user.username)
+                    
                 .btn-bar
-                    a(href='') &Dstrok;&#x1ED5;i m&#x1EAD;t kh&#x1EA9;u
-                    button.change-profile Thay &dstrok;&#x1ED5;i
+                    button.change-profile Thay đổi
+                    a(href='') Đổi mật khẩu
                     
     aside.sidebar.settingsider.hidden(role='complementary' aria-label='Thông tin đoạn chat')
         .header
             span.back-arrow
                 i.fa-solid.fa-arrow-left
-            h2 Setting
+            h2 Profile
             .actions
                 span.edit
                     i.fa-solid.fa-pencil
@@ -41,23 +40,24 @@ mixin settingsider(user)
                     i.fas.fa-ellipsis-v
         .user-inner
             .user-info
+                img.user-info(src=user.avatar alt='Baor')
                 .info
-                    span.username Viet Bao
+                    span.username=user.full_name
                     span.status.online online
             .user-contact-info
                 ul
                     li
                         i.fa-regular.fa-envelope
                         .contact-info
-                            .contact bao.hole@hcmut.edu.vn
+                            .contact=user.email
                             .type email
                     li
                         i.fa-solid.fa-phone
                         .contact-info
-                            .contact 0949347806
+                            .contact=user.phone
                             .type phone
                     li
                         i.fa-solid.fa-at
                         .contact-info
-                            .contact @bao.hole
+                            .contact=user.username
                             .type username

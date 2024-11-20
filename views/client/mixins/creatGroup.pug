@@ -36,13 +36,13 @@ mixin creatGroup(friends)
                 .user-search
                     input#userSearch(type="text" placeholder="Tìm kiếm")
                 
-                ul#userList.user-list
-                    each friend in friends
-                        .user-item
-                            .user-avatar
-                                img(src=friend.avatar)
-                            .user-full_name=friend.full_name
-                            input.form-check-input(type='checkbox' value=friend._id)
+                //- ul#userList.user-list
+                //-     each friend in friends
+                //-         .user-item
+                //-             .user-avatar
+                //-                 img(src=friend.avatar)
+                //-             .user-full_name=friend.full_name
+                //-             input.form-check-input(type='checkbox' value=friend._id)
             
             input.hidden(
                 name='ids'

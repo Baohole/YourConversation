@@ -1,14 +1,27 @@
 mixin friend-list(friends)
     aside.sidebar.chatsider(role='complementary' aria-label='Chat sidebar')
         header.chatsider-header
+            // "Add Friend" button
+            button.action-btn(title='Add Friend')
+                i.fa-solid.fa-bars
+
+            // Search container
             .search-container
                 i.fa-solid.fa-magnifying-glass
                 input.find-input(type='text' placeholder='Find friends...' aria-label='Search friends')
-            .header-actions
-                button.action-btn(title='Add Friend' onclick='addFriend()')
-                    i.fas.fa-user-plus
-                button.action-btn(title='Create Group' onclick='createGroup()')
-                    i.fas.fa-users
+
+            // Dropdown menu for "Add Friend" positioned below the search container
+            .menu-container.hidden(
+                class="menu-container absolute bg-white border border-gray-300 rounded-lg shadow-lg mt-12 p-2 w-30 z-10"
+            )
+                ul.menu.space-y-2
+                    li.menu-item(opt='add-friend-nav')
+                        span(class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md") Add Friend
+                    li.menu-item(opt='')
+                        span(class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md") Create Group
+                    li.menu-item(opt='settingsider')
+                        span(class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md") Profile
+
         ul.user-list(role='list')
             each room in rooms
                 a(
@@ -21,22 +34,134 @@ mixin friend-list(friends)
                                 span.user-name=room.name
                                 .user-status.online
                                     span Online
-    //- aside.user-list
-    //-     .text-field
-    //-         input#outlined-search(type='search')
-    //-         hr.divider
-    //-     ul.list
-    //-         each room in rooms
-    //-             a(
-    //-                 href=`/chat/${room.id}`
-    //-             )
-    //-                 li.user-info
-    //-                     .user-avatar
-    //-                         img.avatar(src=room.avatar alt=room.name)
-    //-                     .user-name
-    //-                         h3=room.name
-    //-                         p
-    //-                             span.nearest-message Ali Connors
-    //-                             |  &mdash; I&apos;ll be in your neighborhood doing errands
-    //-                             |                             this&mldr;
-    //-             hr.divider
+
+    aside.sidebar.hidden.add-friend-nav.bg-white.border.border-gray-300.rounded-lg.shadow-lg.p-6.w-80.max-w-sm
+        .flex.items-center.justify-between.mb-6
+            h2.text-lg.font-semibold.text-gray-800
+                span.flex.items-center.gap-2 Add Friend
+                   
+        form.space-y-6(action='/friends/add' method='POST' id='addFriendForm')
+            .space-y-2
+                label.block.text-sm.font-medium.text-gray-700(for='username') 
+                    | Username or Email
+                    span.text-red-500.ml-1 *
+                .relative
+                    input#username.w-full.px-4.py-2.border.border-gray-300.rounded-lg.transition-colors(
+                        type='text'
+                        name='username'
+                        placeholder='Enter username or email'
+                        required
+                        autocomplete='off'
+                        aria-required='true'
+                        class='placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+                    )
+
+            .flex.flex-col.gap-3
+                button#submitButton.w-full.py-2.px-4.bg-blue-600.text-white.font-medium.rounded-lg.transition-colors(
+                    type='submit'
+                    class='hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed'
+                )
+                    .flex.items-center.justify-center.gap-2
+                        span Send Friend Request
+                       
+            button.w-full.py-2.px-4.bg-gray-100.text-gray-700.font-medium.rounded-lg.transition-colors(
+                type='button'
+                class='hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500'
+            ) Cancel
+
+        //- Help text
+        p.mt-4.text-sm.text-gray-600
+            | You can search by username (e.g. @johndoe) or email address   
+    aside.sidebar.shadow-lg.hidden
+        //- .px-2.py-2.border-b.border-gray-200
+        //-     h2.text-lg.font-semibold Add Members
+        //-     input.w-full.mt-0.p-2.border.rounded-lg(type='text' placeholder='Add people...' class='focus:outline-none focus:ring focus:border-blue-300')
+        //- .p-2.space-y-3.overflow-y-auto.flex-grow
+        //-     // Member List Item
+        //-     .flex.items-center.space-x-4
+        //-         input.form-checkbox.h-4.w-4.text-blue-600(type='checkbox')
+        //-         .flex.items-center.space-x-2
+        //-             .w-10.h-10.rounded-full.bg-pink-500.text-white.flex.items-center.justify-center.font-bold
+        //-                 | CB
+        //-             div
+        //-                 p.font-medium C&agrave; Bin
+        //-                 p.text-sm.text-gray-500 last seen a long time ago
+        //-     // Repeat for each member
+        //-     .flex.items-center.space-x-4
+        //-         input.form-checkbox.h-4.w-4.text-blue-600(type='checkbox')
+        //-         .flex.items-center.space-x-2
+        //-             .w-10.h-10.rounded-full.bg-blue-500.text-white.flex.items-center.justify-center.font-bold
+        //-                 | CL
+        //-             div
+        //-                 p.font-medium Ch&#x1ECB; Linh
+        //-                 p.text-sm.text-gray-500 last seen May 23 at 20:34
+        //-     .flex.items-center.space-x-4
+        //-         input.form-checkbox.h-4.w-4.text-blue-600(type='checkbox')
+        //-         .flex.items-center.space-x-2
+        //-             .w-10.h-10.rounded-full.bg-blue-400.text-white.flex.items-center.justify-center.font-bold
+        //-                 | C&Dstrok;
+        //-             div
+        //-                 p.font-medium Ch&uacute; B&eacute; D&#x1EA7;n
+        //-                 p.text-sm.text-gray-500 last seen Feb 14 at 00:43
+        //- // Continue adding members as above, changing initials, colors, and "last seen" text as needed
+        //- // Add button at the bottom
+        //- .flex.justify-end.mt-4
+        //-     button.bg-blue-500.text-white.px-4.py-2.rounded-full.transition(class='hover:bg-blue-600')
+        //-         | &#x2794;
+        .px-2.py-2.border-b.border-gray-200
+            h2.text-lg.font-semibold New Group
+        // Group Image and Name Input
+        .flex.flex-col.items-center.p-2.space-y-4
+            .w-24.h-24.rounded-full.bg-gradient-to-r.from-blue-400.to-blue-500.flex.items-center.justify-center
+                svg.h-12.w-12.text-white(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke='currentColor')
+                    path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 4v16m8-8H4m6-6l2-2m0 0l2 2m-2-2v10')
+            input.w-full.px-2.py-2.border.rounded-lg(type='text' placeholder='Group Name' value='Viết, Chú Bé Dần' class='focus:outline-none focus:ring focus:border-blue-300')
+        // Member List Section
+        .px-2.py-2
+            p.text-blue-500 1 member
+            .flex.items-center.space-x-4.mt-2
+                .w-10.h-10.rounded-full.bg-blue-500.text-white.flex.items-center.justify-center.font-bold
+                    | C&Dstrok;
+                div
+                    p.font-medium Ch&uacute; B&eacute; D&#x1EA7;n
+                    p.text-sm.text-gray-500 last seen Feb 14 at 00:43
+            .flex.items-center.space-x-4.mt-2
+                .w-10.h-10.rounded-full.bg-blue-500.text-white.flex.items-center.justify-center.font-bold
+                    | C&Dstrok;
+                div
+                    p.font-medium Ch&uacute; B&eacute; D&#x1EA7;n
+                    p.text-sm.text-gray-500 last seen Feb 14 at 00:43
+            .flex.items-center.space-x-4.mt-2
+                .w-10.h-10.rounded-full.bg-blue-500.text-white.flex.items-center.justify-center.font-bold
+                    | C&Dstrok;
+                div
+                    p.font-medium Ch&uacute; B&eacute; D&#x1EA7;n
+                    p.text-sm.text-gray-500 last seen Feb 14 at 00:43
+            .flex.items-center.space-x-4.mt-2
+                .w-10.h-10.rounded-full.bg-blue-500.text-white.flex.items-center.justify-center.font-bold
+                    | C&Dstrok;
+                div
+                    p.font-medium Ch&uacute; B&eacute; D&#x1EA7;n
+                    p.text-sm.text-gray-500 last seen Feb 14 at 00:43
+            .flex.items-center.space-x-4.mt-2
+                .w-10.h-10.rounded-full.bg-blue-500.text-white.flex.items-center.justify-center.font-bold
+                    | C&Dstrok;
+                div
+                    p.font-medium Ch&uacute; B&eacute; D&#x1EA7;n
+                    p.text-sm.text-gray-500 last seen Feb 14 at 00:43
+            .flex.items-center.space-x-4.mt-2
+                .w-10.h-10.rounded-full.bg-blue-500.text-white.flex.items-center.justify-center.font-bold
+                    | C&Dstrok;
+                div
+                    p.font-medium Ch&uacute; B&eacute; D&#x1EA7;n
+                    p.text-sm.text-gray-500 last seen Feb 14 at 00:43
+            .flex.items-center.space-x-4.mt-2
+                .w-10.h-10.rounded-full.bg-blue-500.text-white.flex.items-center.justify-center.font-bold
+                    | C&Dstrok;
+                div
+                    p.font-medium Ch&uacute; B&eacute; D&#x1EA7;n
+                    p.text-sm.text-gray-500 last seen Feb 14 at 00:43
+        // Next Button
+        .flex.justify-end.p-6.mt-auto
+            button.bg-blue-500.text-white.p-3.rounded-full.transition(class='hover:bg-blue-600')
+                | &#x2794;

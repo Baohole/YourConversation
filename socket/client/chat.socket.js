@@ -27,28 +27,35 @@ module.exports = (req, res) => {
                 socket.join(room_id);
 
                 socket.on('CLIENT_SEND_MESSAGE', async (data) => {
-                    //  console.log(data);
-
+                    // console.log(data);
+                    // console.log(typeof data.files);
+                    // console.log(data.files); // Check the structure before saving
                     try {
                         let chat = {
                             message: data.message,
                             user_id: _id,
+                            files: [],
                             user_name: res.locals.user.full_name,
-                            files:[],
                             room_id: room_id
                         };
-                        // console.log(chat);
+
                         for (const file of data.files) {
-                            const link = await uploadHelper(file.file);
-                            const tmp = {
-                                link:link,
-                                type: file.type
-                            }
+                            // console.log(format);
+                            const link = await uploadHelper({
+                                buffer: file.file,
+                                name: file.name
+                            });
+                            const tmp = { 
+                                link: link, 
+                                type: file.type,
+                                name: file.name,
+                                size: file.size
+                            };
+                            console.log(file.size);
                             chat.files.push(tmp);
                         }
-                        console.log(chat);
-                        const savedChat = new Chat(chat);
 
+                        const savedChat = new Chat(chat);
                         try {
                             await savedChat.save();
                             await RoomChat.updateOne(
@@ -105,8 +112,25 @@ module.exports = (req, res) => {
                 }
             });
 
-
-
+            socket.on('CLIENT_CHANGE_NOTIFICATION', async (data) => {
+                // console.log(data);
+                try {
+                    await RoomChat.updateOne(
+                        { 
+                            _id: room_id,
+                            'users.user_id': data.id 
+                        },
+                        {
+                            $set: {
+                                'users.$.notification': data.notification
+                            }
+                        }
+                    )
+    
+                } catch (error) {
+                    console.log(' socket - CLIENT_CHANGE_NOTIFICATION', error)
+                }
+            });
         }
 
     });

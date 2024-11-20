@@ -1,0 +1,72 @@
+/* General alert styling */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+    position: fixed;
+    top: 70px;
+    right: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 0.5s ease;
+    cursor: pointer;
+}
+
+/* error alert styling */
+.alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+/* Close button styling */
+i {
+    margin-right: 7px;
+    align-self: center;
+}
+
+.alert-success i{
+    color: #155724;
+}
+
+.alert-error i{
+    color: #721c24;
+   
+}
+
+span[close-alert]:hover {
+    color: #491217;
+}
+
+/* Timebar styling */
+.alert .timebar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.1); /* Background for the countdown effect */
+    width: 100%;
+    transition: width linear;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

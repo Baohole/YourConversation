@@ -4,12 +4,16 @@ const chatsSchema = new mongoose.Schema({
     user_id: String,
     room_id: String,
     message: String,
-    files:[
-        {
-            link: String,
-            type: String
-        }
-    ],
+    // files:  [
+    //     {
+    //         link: String,
+    //         type: String
+    //     }
+    // ],
+    files: {
+        type: Array,
+        default: []
+    },
     created_at: {
         type: Date,
         default: Date.now()
