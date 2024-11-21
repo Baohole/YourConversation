@@ -8,7 +8,7 @@ module.exports = (req, res) => {
             socket.connectioHandler = true;
 
             //console.log(req.params.id);
-            const _id = res.locals.user.id;
+            // const _id = res.locals.user.id;
             // const all_room = await RoomChat.find({
             //     deleted: false,
             //     'users.user_id': _id
@@ -33,7 +33,7 @@ module.exports = (req, res) => {
                     try {
                         let chat = {
                             message: data.message,
-                            user_id: _id,
+                            user_id: data._id,
                             files: [],
                             user_name: res.locals.user.full_name,
                             room_id: room_id
@@ -45,8 +45,8 @@ module.exports = (req, res) => {
                                 buffer: file.file,
                                 name: file.name
                             });
-                            const tmp = { 
-                                link: link, 
+                            const tmp = {
+                                link: link,
                                 type: file.type,
                                 name: file.name,
                                 size: file.size
@@ -87,38 +87,14 @@ module.exports = (req, res) => {
 
             }
 
-            socket.on('CLIENT_SEND_CALLING', (data) => {
-                const room = RoomChat.findOne({
-                    deleted: false,
-                    id: room_id,
-                    'users.user_id': _id
-                }).select('name avatar');
-                if (room.type == 'friend') {
-                    room.avatar = res.locals.user.avatar;
-                    room.name = res.locals.user.full_name;
-                }
-                //console.log(data.user_call + ' - ' + _id);
-                if (_id == data.user_call) {
-                    const room_detail = {
-                        name: room.name,
-                        avatar: room.avatar
-                    }
-
-                    //console.log(data);
-                    socket.broadcast.to(data.roomId).emit('SERVER_SEND_CALLING', {
-                        ...data,
-                        room_detail
-                    })
-                }
-            });
 
             socket.on('CLIENT_CHANGE_NOTIFICATION', async (data) => {
                 // console.log(data);
                 try {
                     await RoomChat.updateOne(
-                        { 
+                        {
                             _id: room_id,
-                            'users.user_id': data.id 
+                            'users.user_id': data.id
                         },
                         {
                             $set: {
@@ -126,7 +102,7 @@ module.exports = (req, res) => {
                             }
                         }
                     )
-    
+
                 } catch (error) {
                     console.log(' socket - CLIENT_CHANGE_NOTIFICATION', error)
                 }

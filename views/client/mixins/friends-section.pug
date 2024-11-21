@@ -1,19 +1,18 @@
 mixin friends-section
-    .button-stack
-        button.btn.contained
-            a(href='/friends/list') 
-                i(class="fa-solid fa-user")
-                span Danh sách bạn bè
-        button.btn.contained
-            a(href='/friends/request') 
-                i(class="fa-solid fa-user-plus")
-                span Yêu cầu kết bạn 
-        button.btn.contained
-            a(href='/friends/request-sent') 
-                i(class="fa-solid fa-file-export")
-                span Lời mời đã gửi
-        button.btn.contained
-            a(href='/groups') 
-                i(class="fa-solid fa-user-group")
-                span Danh sách nhóm
-        hr
+    ul.space-y-4
+        li
+            a.flex.items-center.gap-2.text-blue-500(href='/friends/list' class='hover:text-blue-700')
+                i.fa-solid.fa-user
+                span Danh s&aacute;ch b&#x1EA1;n b&egrave;
+        li
+            a.flex.items-center.gap-2.text-blue-500(href='/friends/request' class='hover:text-blue-700')
+                i.fa-solid.fa-user-plus
+                span Y&ecirc;u c&#x1EA7;u k&#x1EBF;t b&#x1EA1;n
+        li
+            a.flex.items-center.gap-2.text-blue-500(href='/friends/request-sent' class='hover:text-blue-700')
+                i.fa-solid.fa-file-export
+                span L&#x1EDD;i m&#x1EDD;i &dstrok;&atilde; g&#x1EED;i
+        li
+            a.flex.items-center.gap-2.text-blue-500(href='/groups' class='hover:text-blue-700')
+                i.fa-solid.fa-user-group
+                span Danh s&aacute;ch nh&oacute;m

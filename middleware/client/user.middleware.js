@@ -8,6 +8,15 @@ module.exports = async (req, res, next) =>{
         }).select('-password');
         user.username = user.username.split('@')[1];
         if(user){
+            // const my_id = res.locals.user.id
+            // const user = await User.findOne({
+            //     _id: my_id
+            // }).select('-user_token -password');
+        
+            const request = await User.find({
+                _id: { $in: user.requestFriend }
+            }).select('-user_token -password');
+            user.requestFriend = request;
             res.locals.user = user;
         }
     }

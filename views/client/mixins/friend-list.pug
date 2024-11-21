@@ -16,7 +16,7 @@ mixin friend-list(friends)
             )
                 ul.menu.space-y-2
                     li.menu-item(opt='add-friend-nav')
-                        span(class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md") Add Friend
+                        span(class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md") Friends
                     li.menu-item(opt='')
                         span(class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md") Create Group
                     li.menu-item(opt='settingsider')
@@ -35,12 +35,12 @@ mixin friend-list(friends)
                                 .user-status.online
                                     span Online
 
-    aside.sidebar.hidden.add-friend-nav.bg-white.border.border-gray-300.rounded-lg.shadow-lg.p-6.w-80.max-w-sm
+    aside.hidden(class='sidebar add-friend-nav bg-white border border-gray-300 rounded-lg shadow-lg p-3 w-120 max-w-s')
         .flex.items-center.justify-between.mb-6
             h2.text-lg.font-semibold.text-gray-800
                 span.flex.items-center.gap-2 Add Friend
                    
-        form.space-y-6(action='/friends/add' method='POST' id='addFriendForm')
+        form.space-y-6(id='addFriendForm')
             .space-y-2
                 label.block.text-sm.font-medium.text-gray-700(for='username') 
                     | Username or Email
@@ -64,14 +64,33 @@ mixin friend-list(friends)
                     .flex.items-center.justify-center.gap-2
                         span Send Friend Request
                        
-            button.w-full.py-2.px-4.bg-gray-100.text-gray-700.font-medium.rounded-lg.transition-colors(
-                type='button'
-                class='hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500'
-            ) Cancel
-
         //- Help text
-        p.mt-4.text-sm.text-gray-600
-            | You can search by username (e.g. @johndoe) or email address   
+        p.mt-2.text-sm.text-gray-600
+            | You can search by username (e.g. @johndoe) or email address  
+
+        .friend-request.flex-1.overflow-y-auto.mt-6.border-t.pt-4.w-120 
+            ul.space-y-4
+                each request in user.requestFriend
+                    li.flex.items-center.justify-between.bg-gray-50.p-2.rounded-lg.border.border-gray-200(data-friend=request.id)
+                        .flex.items-center.gap-2.flex-1.overflow-hidden
+                            img.w-10.h-10.rounded-full(src=request.avatar alt='User Avatar')
+                            .flex.flex-col.overflow-hidden
+                                span.font-medium.text-gray-900.truncate(max-w-xs)=request.full_name
+                                span.text-sm.text-gray-600=request.username
+                        .flex.items-center.gap-2
+                            button.px-3.py-1.bg-blue-600.text-white.text-sm.font-medium.rounded-md.transition-colors(
+                                type='button'
+                                class='hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 accept-btn'
+                            ) Accept
+                            button.px-3.py-1.bg-gray-100.text-gray-700.text-sm.font-medium.rounded-md.transition-colors(
+                                type='button'
+                                class='hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 decline-btn'
+                            ) Decline
+            //- Empty state message
+            p.text-sm.text-gray-500.mt-4.text-center No pending friend requests.
+
+
+
     aside.sidebar.shadow-lg.hidden
         //- .px-2.py-2.border-b.border-gray-200
         //-     h2.text-lg.font-semibold Add Members

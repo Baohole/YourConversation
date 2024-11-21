@@ -40,11 +40,12 @@ module.exports = async (req, res, socket) => {
                     }
                     // console.log(data);
                     try {
-                        res.locals.user = await User.updateOne({
+                        await User.updateOne({
                             _id: newProfile._id
                         }, {
                             ...data
                         });
+                        
                     } catch (error) {
                         result.type='error';
                         result.message="Thay đổi thông tin thất bại";

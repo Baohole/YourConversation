@@ -1,186 +1,192 @@
 extends ../../layouts/default.pug
 include ../../mixins/formatTime.pug
-include ../../mixins/creatGroup.pug
 
-    block main
-        .chat-area(room-id=room_detail.id)
-            // Chat Header
-            .chat-header
-                .user-info
-                    img.profile-pic(src=room_detail.avatar alt=room_detail.name)
-                    .user-details
-                        h3=room_detail.name
-                        span.online-status Online
+block main
+    .chat-area(room-id=room_detail.id)
+        .chat-header
+            .user-info
+                img.profile-pic(src=room_detail.avatar alt=room_detail.name)
+                .user-details
+                    h3=room_detail.name
+                    span.online-status Online
 
-            #chatMessages.chat-messages
-                each chats, date in messages
-                    .date-header
-                        span=date
-                    each msg in chats
-                        if (msg.user_id != user.id)
-                            .message.received
-                                .avatar
-                                    img(src=msg.user_avatar, alt=msg.user_name)
-                                .message-content
-                                    .inner-content
-                                        .username
-                                            span.name=msg.user_name
-                                            span.role owner
-                                        .content
-                                            each file in msg.files
-                                                if (file.type=='media')
-                                                    img(src=file.link alt='Image' class='inner-img rounded-lg cursor-pointer object-cover max-h-[200px]') 
-                                                else
-                                                    a(
-                                                        href=file.link 
-                                                        download=file.name
-                                                        target='_blank'
-                                                    ).flex.items-center.cursor-pointer.p-2.space-x-4.w-80 
-                                                        .flex.items-center.justify-center.w-12.h-12.bg-black.text-white.rounded-md
-                                                            span.font-bold.text-lg
-                                                                i.fa-solid.fa-file-lines
-                                                        div
-                                                            p.text-gray-800.font-medium=file.name
-                                                            p.text-gray-500.text-sm=file.size
-                                                    
-                                            if (msg.message.length > 0)
-                                                p= msg.message
-                                            +hourandminute(msg.created_at)
-                        else
-                            .message.sent
-                                .message-content
-                                    .inner-content
-                                        .content
-                                            each file in msg.files
-                                                if (file.type=='media')
-                                                    img(src=file.link alt='Image' class='inner-img rounded-lg cursor-pointer object-cover max-h-[200px]') 
-                                                else
-                                                    a(
-                                                        href=file.link 
-                                                        download=file.name
-                                                        target='_blank'
-                                                    ).flex.items-center.cursor-pointer.p-2.space-x-4.w-80 
-                                                        .flex.items-center.justify-center.w-12.h-12.bg-black.text-white.rounded-md
-                                                            span.font-bold.text-lg
-                                                                i.fa-solid.fa-file-lines
-                                                        div
-                                                            p.text-gray-800.font-medium=file.name
-                                                            p.text-gray-500.text-sm=file.size
-
-                                            if (msg.message.length > 0)
-                                                p= msg.message
-                                            +hourandminute(msg.created_at)  
-                // Typing Indicator
-                #typingIndicator.typing-indicators.hidden
-            // Message Input
-            div(
-                class="tooltip" 
-                role="tooltip"
-            )
-                emoji-picker.light
-
-            .chat-container
-                .chat-input
-                    button.emoji-btn
-                        i.fa-regular.fa-face-smile
-                    form(
-                        class='message-input'
-                    ) 
-                        input#messageInput(placeholder='Aa...' autocomplete='off')
-                        label(for="fileInput")
-                            i.fas.fa-paperclip
-                        input#fileInput.hidden(type='file' multiple='true')
-                        // Preview container for selected images
-                    
-
-                button.send-btn
-                    i.fas.fa-paper-plane
-        
-            +creatGroup()
-
-            
-        aside.hidden.chat-property(role='complementary' aria-label='Thông tin đoạn chat')
-            .header
-                button.close-btn &times;
-                span.title Group info
-                span.edit
-                    i.fa-solid.fa-pencil
-            .room-content
-                .group-info
-                    img(src=room_detail.avatar alt='Group Icon')
-                    span.room-name=room_detail.name
-                    if (room_detail.type=='friend')
-                        p Friend
+        #chatMessages.chat-messages
+            each chats, date in messages
+                .date-header
+                    span=date
+                each msg in chats
+                    if (msg.user_id != user.id)
+                        .message.received
+                            .avatar
+                                img(src=msg.user_avatar, alt=msg.user_name)
+                            .message-content
+                                .inner-content
+                                    .username
+                                        span.name=msg.user_name
+                                        span.role owner
+                                    .content
+                                        each file in msg.files
+                                            if (file.type=='media')
+                                                img(
+                                                    src=file.link 
+                                                    alt='Image' 
+                                                    class="w-full max-w-xs h-auto object-cover rounded-xl shadow-md transition-all duration-300 ease-in-out"
+                                                ) 
+                                            else
+                                                a(
+                                                    href=file.link 
+                                                    download=file.name
+                                                    target='_blank'
+                                                ).flex.items-center.cursor-pointer.p-2.space-x-4.w-80 
+                                                    .flex.items-center.justify-center.w-12.h-12.bg-black.text-white.rounded-md
+                                                        span.font-bold.text-lg
+                                                            i.fa-solid.fa-file-lines
+                                                    div
+                                                        p.text-gray-800.font-medium=file.name
+                                                        p.text-gray-500.text-sm=file.size
+                                                
+                                        if (msg.message.length > 0)
+                                            p= msg.message
+                                        +hourandminute(msg.created_at)
                     else
-                        p=`${room_detail.users.length} members`
-                .notification-section
-                    .notification-title
-                        i.fa-regular.fa-bell
-                        p Notifications
-                    label.toggle-switch
-                        input(type='checkbox' checked=user.notification=='on')
-                        span.slider
-            .chat-detail
-                .chat-sections
-                    ul
-                        if (room_detail.type!=='friend')
-                            li(opt='members')
-                                .section(class=room_detail.property==='members' ? 'active' : '') Members
-                        li(opt='media')
-                            .section(class=room_detail.property==='media' ? 'active' : '') Media
-                        li(opt='file')
-                            .section(class=room_detail.property==='file' ? 'active' : '') Files
-                .inner-section
-                    ul.inner-list
-                        //- div=room_detail.type
-                        if (room_detail.type == 'group' && room_detail.property == 'members')
-                            each user in room_detail.users
-                                //- div=user
-                                li.inner-item
-                                    img(
-                                        src=user.avatar
-                                    ).inner-avatar
-                                    .inner-info
-                                        p=user.full_name
-                                        span.status.online online
+                        .message.sent
+                            .message-content
+                                .inner-content
+                                    .content
+                                        each file in msg.files
+                                            if (file.type=='media')
+                                                img(
+                                                    src=file.link 
+                                                    alt='Image' 
+                                                    class="w-full max-w-xs h-auto object-cover rounded-xl shadow-md transition-all duration-300 ease-in-out"
+                                                )  
+                                            else
+                                                a(
+                                                    href=file.link 
+                                                    download=file.name
+                                                    target='_blank'
+                                                ).flex.items-center.cursor-pointer.p-2.space-x-4.w-80 
+                                                    .flex.items-center.justify-center.w-12.h-12.bg-black.text-white.rounded-md
+                                                        span.font-bold.text-lg
+                                                            i.fa-solid.fa-file-lines
+                                                    div
+                                                        p.text-gray-800.font-medium=file.name
+                                                        p.text-gray-500.text-sm=file.size
 
-                            //- div=room_detail
-                        else if (room_detail.type =='friend')
-                            each chats in messages
-                                each msg in chats
-                                    each file in msg.files
-                                        //- div=`${file.type} - ${room_detail.property}`
+                                        if (msg.message.length > 0)
+                                            p= msg.message
+                                        +hourandminute(msg.created_at)  
+            // Typing Indicator
+            #typingIndicator.typing-indicators.hidden
+        // Message Input
+        div(
+            class="tooltip" 
+            role="tooltip"
+        )
+            emoji-picker.light
 
-                                        if (file.type==room_detail.property)
-                                            li.inner-item
-                                                .inner-info
-                                                    if (room_detail.property==='media')
-                                                        img(src=file.link alt='Image')
-                                                    else if (room_detail.property==='file')
-                                                        a(
-                                                            href=file.link 
-                                                            download=file.name
-                                                            target='_blank'
-                                                        ).flex.items-center.cursor-pointer.p-2.space-x-4.w-80 
-                                                            .flex.items-center.justify-center.w-12.h-12.bg-black.text-white.rounded-md
-                                                                span.font-bold.text-lg
-                                                                    i.fa-solid.fa-file-lines
-                                                            div
-                                                                p.text-gray-800.font-medium=file.name
-                                                                p.text-gray-500.text-sm=file.size
-                                
-        .preview-container.hidden.fixed.inset-0.bg-gray-800.bg-opacity-50.flex.items-center.justify-center.z-50
-            // Modal Container
-            .bg-white.rounded-lg.shadow-lg(class='w-[400px]')
-                // Modal Header
-                .flex.items-center.justify-between.px-3.py-2
-                    h2.text-lg.font-semibold Send Files
-                    button.text-gray-600.close-upload-container(class='hover:text-gray-800 text-[32px]') &times;
-                // Image Preview
-                .files-preview.rounded-lg.mx-2.mt-0.overflow-y-scroll.items-center.justify-center(class='h-[230px]')
-                     img.preview(src="#")
-                // Caption Input and Send Button
-                .flex.items-center.px-2.py-3.border-none.space-x-2
-                    input.flex-grow.border-none.px-4.py-2.text-sm(type='text' placeholder='Add a caption...' class='focus:outline-none focus:border-blue-500')
-                    button.send-files-btn.bg-blue-500.text-white.rounded-full.px-3.py-2.font-semibold(class='hover:bg-blue-600') SEND
+        .chat-container
+            .chat-input
+                button.emoji-btn
+                    i.fa-regular.fa-face-smile
+                form(
+                    class='message-input'
+                ) 
+                    input#messageInput(placeholder='Aa...' autocomplete='off')
+                    label(for="fileInput")
+                        i.fas.fa-paperclip
+                    input#fileInput.hidden(type='file' multiple='true')
+                    // Preview container for selected images
+                
+
+            button.send-btn
+                i.fas.fa-paper-plane
+    
+        //- +creatGroup()
+
+        
+    aside.hidden.chat-property(role='complementary' aria-label='Thông tin đoạn chat')
+        .header
+            button.close-btn &times;
+            span.title Group info
+            span.edit
+                i.fa-solid.fa-pencil
+        .room-content
+            .group-info
+                img(src=room_detail.avatar alt='Group Icon')
+                span.room-name=room_detail.name
+                if (room_detail.type=='friend')
+                    p Friend
+                else
+                    p=`${room_detail.users.length} members`
+            .notification-section
+                .notification-title
+                    i.fa-regular.fa-bell
+                    p Notifications
+                label.toggle-switch
+                    input(type='checkbox' checked=user.notification=='on')
+                    span.slider
+        .chat-detail
+            .chat-sections
+                ul
+                    if (room_detail.type!=='friend')
+                        li(opt='members')
+                            .section(class=room_detail.property==='members' ? 'active' : '') Members
+                    li(opt='media')
+                        .section(class=room_detail.property==='media' ? 'active' : '') Media
+                    li(opt='file')
+                        .section(class=room_detail.property==='file' ? 'active' : '') Files
+            .inner-section
+                ul.inner-list
+                    //- div=room_detail.type
+                    if (room_detail.type == 'group' && room_detail.property == 'members')
+                        each user in room_detail.users
+                            //- div=user
+                            li.inner-item
+                                img(
+                                    src=user.avatar
+                                ).inner-avatar
+                                .inner-info
+                                    p=user.full_name
+                                    span.status.online online
+
+                        //- div=room_detail
+                    else if (room_detail.type =='friend')
+                        each chats in messages
+                            each msg in chats
+                                each file in msg.files
+                                    //- div=`${file.type} - ${room_detail.property}`
+
+                                    if (file.type==room_detail.property)
+                                        li.inner-item
+                                            .inner-info
+                                                if (room_detail.property==='media')
+                                                    img(src=file.link alt='Image')
+                                                else if (room_detail.property==='file')
+                                                    a(
+                                                        href=file.link 
+                                                        download=file.name
+                                                        target='_blank'
+                                                    ).flex.items-center.cursor-pointer.p-2.space-x-4.w-80 
+                                                        .flex.items-center.justify-center.w-12.h-12.bg-black.text-white.rounded-md
+                                                            span.font-bold.text-lg
+                                                                i.fa-solid.fa-file-lines
+                                                        div
+                                                            p.text-gray-800.font-medium=file.name
+                                                            p.text-gray-500.text-sm=file.size
+                            
+    .preview-container.hidden.fixed.inset-0.bg-gray-800.bg-opacity-50.flex.items-center.justify-center.z-50
+        // Modal Container
+        .bg-white.rounded-lg.shadow-lg(class='w-[400px]')
+            // Modal Header
+            .flex.items-center.justify-between.px-3.py-2
+                h2.text-lg.font-semibold Send Files
+                button.text-gray-600.close-upload-container(class='hover:text-gray-800 text-[32px]') &times;
+            // Image Preview
+            .files-preview.rounded-lg.mx-2.mt-0.overflow-y-scroll.items-center.justify-center(class='h-[230px]')
+                    img.preview(src="#")
+            // Caption Input and Send Button
+            .flex.items-center.px-2.py-3.border-none.space-x-2
+                input.flex-grow.border-none.px-4.py-2.text-sm(type='text' placeholder='Add a caption...' class='focus:outline-none focus:border-blue-500')
+                button.send-files-btn.bg-blue-500.text-white.rounded-full.px-3.py-2.font-semibold(class='hover:bg-blue-600') SEND
 

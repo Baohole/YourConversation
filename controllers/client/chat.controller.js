@@ -16,7 +16,7 @@ module.exports.index = async (req, res) => {
     res.render('client/layouts/default', {
         pageTitle: 'Chat',
         rooms: groups.rooms,
-        friends: groups.user_friends
+        friends: groups.user_friends,
     });
 }
 
@@ -106,7 +106,6 @@ module.exports.roomChat = async (req, res) => {
         friends: groups.user_friends,
         rooms: groups.rooms,
         room_detail: room_detail,
-        user: res.locals.user
     });
 
 }

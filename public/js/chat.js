@@ -23,10 +23,11 @@ if (body) {
                 e.preventDefault();
                 const message = input.value;
                 if (message || files.length > 0) {
-                    console.log(files);
+                    // console.log(files);
                     socket.emit('CLIENT_SEND_MESSAGE', {
                         message: message,
                         files: files,
+                        _id:_id
                     });
                     input.value = '';
                     files = [];
@@ -130,7 +131,7 @@ if (body) {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
             //const chatBody = body.querySelector('.main-content .chat-area .chat-container');
-
+            console.log(_id, message.user_id)
             const existTyping = isTyping.querySelector(`[user-id="${message.user_id}"]`);
             let messageowner = "";
             if (existTyping) {

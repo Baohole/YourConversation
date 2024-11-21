@@ -41,6 +41,7 @@ menu.forEach(opt => {
         // console.log(opt)
         const barClass = opt.getAttribute('opt');
         showSideBar(barClass);
+        menuContainer.classList.add('hidden');
     });
 });
 // console.log(menu);
@@ -140,6 +141,40 @@ if (profileSider) {
 
         });
     }
+
+}
+
+const friendSider = document.querySelector('.add-friend-nav');
+if (friendSider) {
+    const friendForm = friendSider.querySelector('#addFriendForm');
+    friendForm.addEventListener('submit', (e) => {
+        const username = friendForm.querySelector('#username').value;
+        // console.log(friendForm.querySelector('#username').value.type);
+        socket.emit('CLIENT_ADD_FRIEND', {
+            friend: username
+        });
+        e.preventDefault()
+    });
+
+    const friends = friendSider.querySelectorAll('.friend-request li');
+    friends.forEach((friend) => {
+        const friendID = friend.getAttribute('data-friend');
+        const declineBtn = friendSider.querySelector('.decline-btn');
+        declineBtn.addEventListener('click', (e) => {
+            // console.log(friendID)
+            socket.emit('CLIENT_DECLINE_REQUEST', {
+                friendID: friendID
+            });
+        });
+
+        const acceptBtn = friendSider.querySelector('.accept-btn');
+        acceptBtn.addEventListener('click', (e) => {
+            // console.log(friendID)
+            socket.emit('CLIENT_ACCEPT_REQUEST', {
+                friendID: friendID
+            });
+        });
+    });
 
 }
 
